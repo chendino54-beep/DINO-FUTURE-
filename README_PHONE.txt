@@ -1,26 +1,26 @@
-DINO FUTURE PWA — PHONE SETUP
+DINO FUTURE v1.2 — ANDROID PWA PACKAGE
 
-This version is a mobile-friendly prototype. It includes:
-- Football and basketball workspaces
-- Match input form and market catalogue
-- Basic probability estimates (football goal markets use Poisson assumptions)
-- Saved predictions in this browser's local storage
-- Manual won/lost grading and JSON export
-- Offline caching after first visit (when hosted on HTTPS)
+Includes football and basketball match analysis, editable expected-stat inputs, market estimates, private saved predictions, manual won/lost grading, export and offline cache.
 
-IMPORTANT LIMITATIONS:
-- It does not fetch live fixtures, results, lineups, player statistics or odds yet.
-- Player scorer and player-prop probabilities are not calculated in this version.
-- Basketball estimates are rough illustrative approximations, not trained forecasts.
-- Market coverage and available stats vary by competition/provider.
-- No prediction is guaranteed.
+MARKET ESTIMATES INCLUDED
+Football: 1X2, goals over/under, BTTS, most-likely correct score, corners, cards, team goals, penalty awarded (manual probability), selected player to score / 2+ goals (manual xG and starter assumption).
+Basketball: match winner, total points, team points, total rebounds/assists and selected player points/rebounds/assists thresholds.
 
-INSTALL FROM ANDROID:
-1. The app must first be hosted on an HTTPS site for PWA installation.
-2. Easiest phone-only route: create a GitHub account, create a public repository named dino-future, upload the files in this ZIP, then enable Settings > Pages > Deploy from branch > main / root.
-3. Open the resulting GitHub Pages URL in Chrome on Android.
-4. Chrome menu (three dots) > Add to Home screen / Install app.
+IMPORTANT LIMITATIONS
+- This is NOT connected to live fixtures, results, odds, lineups or verified player databases.
+- Player and penalty probabilities are only estimates from assumptions entered by the user.
+- Basketball probabilities are rough approximations, not a trained model.
+- Correct score shows the most likely score under the entered Poisson assumptions, not every scoreline.
+- Predictions are uncertain; nothing is guaranteed.
 
-Keep saved predictions backed up with Settings > Export. Clearing Chrome site data may erase locally saved records.
+PHONE INSTALLATION
+1. Extract this ZIP. Upload the CONTENTS (not the ZIP) to the root of your GitHub repository.
+2. Keep index.html, manifest.webmanifest and sw.js at repository root. Keep icons/icon-192.png and icons/icon-512.png in the icons folder.
+3. Commit changes. GitHub repository Settings > Pages > Deploy from a branch > main > /(root) > Save.
+4. Open https://USERNAME.github.io/REPOSITORY/ in Chrome, then menu > Install app / Add to Home screen.
 
-Never put paid API keys into index.html. A secure backend is required for private API credentials.
+DATA PRIVACY
+Predictions are stored in browser local storage on this device. Export backups before clearing Chrome data. Public GitHub Pages means the app source code is public; never put API keys or private information in it.
+
+LIVE DATA REQUIREMENT
+A provider account/API and secure backend are required for live data. Never place secret API keys in index.html. Provider coverage, terms, free limits and attribution must be checked before enabling live fixtures or automatic grading.

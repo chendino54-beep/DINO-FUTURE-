@@ -51,10 +51,14 @@ footer{text-align:center;color:#8190a0;font-size:10px;padding:15px}
   <div id="footballInputs">
    <div class="row"><div><label>Home expected goals</label><input id="homeXg" type="number" min="0" max="8" step=".1" value="1.5"></div><div><label>Away expected goals</label><input id="awayXg" type="number" min="0" max="8" step=".1" value="1.1"></div></div>
    <div class="row"><div><label>Expected total corners</label><input id="corners" type="number" min="0" max="25" step=".5" value="9.5"></div><div><label>Expected total cards</label><input id="cards" type="number" min="0" max="15" step=".5" value="3.5"></div></div>
+   <div class="row"><div><label>Selected player expected goals (xG)</label><input id="playerXg" type="number" min="0" max="4" step=".05" value="0.45"></div><div><label>Player name</label><input id="playerName" placeholder="Enter player name"></div></div>
+   <div class="row"><div><label>Probability of penalty in match (%)</label><input id="penaltyChance" type="number" min="0" max="100" value="25"></div><div><label>Probability player starts (%)</label><input id="starterChance" type="number" min="0" max="100" value="85"></div></div>
   </div>
   <div id="basketballInputs" class="hidden">
    <div class="row"><div><label>Home expected points</label><input id="homePts" type="number" min="0" max="200" value="110"></div><div><label>Away expected points</label><input id="awayPts" type="number" min="0" max="200" value="106"></div></div>
-   <div class="row"><div><label>Expected total rebounds (optional)</label><input id="rebounds" type="number" min="0" max="150" value="85"></div><div><label>Expected total assists (optional)</label><input id="assists" type="number" min="0" max="100" value="48"></div></div>
+   <div class="row"><div><label>Expected total rebounds</label><input id="rebounds" type="number" min="0" max="150" value="85"></div><div><label>Expected total assists</label><input id="assists" type="number" min="0" max="100" value="48"></div></div>
+   <div class="row"><div><label>Player name</label><input id="basketPlayer" placeholder="Enter player name"></div><div><label>Player expected points</label><input id="playerPts" type="number" min="0" max="100" value="18"></div></div>
+   <div class="row"><div><label>Player expected rebounds</label><input id="playerReb" type="number" min="0" max="40" value="6"></div><div><label>Player expected assists</label><input id="playerAst" type="number" min="0" max="30" value="4"></div></div>
   </div>
   <button class="btn full" onclick="generateMarkets()">Generate available estimates</button>
  </div>
@@ -64,11 +68,11 @@ footer{text-align:center;color:#8190a0;font-size:10px;padding:15px}
 <section id="settings" class="hidden"><h3>Settings & data sources</h3>
  <div class="card"><h4>Privacy</h4><p class="muted">Your saved records stay in this browser's local storage. Clearing browser data can erase them. No account or public profile is used.</p></div>
  <div class="card"><h4>Sports data connection</h4><p class="muted">Next integration stage: connect a free sports-data provider through a secure service. Do not paste private API keys into this public page.</p><p class="muted">A free multi-sport API candidate is SportScore; its terms require visible attribution. Coverage and market-specific statistics must be tested before use.</p><a href="https://sportscore.com/developers/" target="_blank" rel="noopener">SportScore developer information ↗</a></div>
- <div class="card"><h4>Prediction model</h4><p class="muted">Football goals use a simple Poisson model from the expected-goal inputs. Other markets use approximate estimates. Player markets require verified lineups and player-level data and are not calculated in this version.</p></div>
+ <div class="card"><h4>Prediction model</h4><p class="muted">Football goal estimates use a simple independent Poisson model. Corner, card, penalty and player markets use user-entered assumptions or rough approximations. Basketball estimates use simple logistic approximations. These are not trained or calibrated forecasts. Verify lineups and player statistics independently.</p></div>
  <div class="card"><h4>Backup</h4><button class="btn secondary full" onclick="exportData()">Export my saved predictions</button><button class="btn danger full" onclick="clearData()">Delete all saved data</button></div>
  <div class="warning">Predictions are uncertain estimates, not betting advice or guarantees. Never stake money you cannot afford to lose.</div>
 </section>
-<footer>DINO FUTURE • Personal prototype • v1.1</footer>
+<footer>DINO FUTURE • Personal prototype • v1.2</footer>
 </main>
 <nav><button class="active" data-page="home" onclick="showPage('home')"><b>⌂</b>Home</button><button data-page="analyze" onclick="showPage('analyze')"><b>＋</b>Analyse</button><button data-page="saved" onclick="showPage('saved')"><b>▣</b>Saved</button><button data-page="settings" onclick="showPage('settings')"><b>⚙</b>Settings</button></nav>
 <script>
@@ -97,7 +101,10 @@ function generateMarkets(){
    ['Correct score '+correct.score,correct.p],
    ['Over 7.5 corners',poissonPOver(+document.getElementById('corners').value,7.5)],['Over 8.5 corners',poissonPOver(+document.getElementById('corners').value,8.5)],['Over 9.5 corners',poissonPOver(+document.getElementById('corners').value,9.5)],
    ['Over 2.5 cards',poissonPOver(+document.getElementById('cards').value,2.5)],['Over 3.5 cards',poissonPOver(+document.getElementById('cards').value,3.5)],
-   [h+' over 0.5 goals',1-Math.exp(-xh)],[a+' over 0.5 goals',1-Math.exp(-xa)]
+   [h+' over 0.5 goals',1-Math.exp(-xh)],[a+' over 0.5 goals',1-Math.exp(-xa)],
+   ['Penalty awarded: Yes',+document.getElementById('penaltyChance').value/100],
+   [(document.getElementById('playerName').value.trim()||'Selected player')+' to score',1-Math.exp(-(+document.getElementById('playerXg').value)*(+document.getElementById('starterChance').value/100))],
+   [(document.getElementById('playerName').value.trim()||'Selected player')+' 2+ goals',poissonPOver(+document.getElementById('playerXg').value,1.5)*(+document.getElementById('starterChance').value/100)]
   ];
  }else{
   let hp=+document.getElementById('homePts').value,ap=+document.getElementById('awayPts').value,mean=hp+ap;
@@ -105,7 +112,11 @@ function generateMarkets(){
   markets=[['Home win',1/(1+Math.exp(-(hp-ap)/12))],['Away win',1/(1+Math.exp(-(ap-hp)/12))],
   ['Over 199.5 total points',normalOver(mean,199.5,18)],['Over 209.5 total points',normalOver(mean,209.5,18)],['Over 219.5 total points',normalOver(mean,219.5,18)],['Under 219.5 total points',1-normalOver(mean,219.5,18)],
   ['Home team over 99.5 points',normalOver(hp,99.5,10)],['Away team over 99.5 points',normalOver(ap,99.5,10)],
-  ['Over 79.5 total rebounds',normalOver(+document.getElementById('rebounds').value,79.5,8)],['Over 39.5 total assists',normalOver(+document.getElementById('assists').value,39.5,6)]];
+  ['Over 79.5 total rebounds',normalOver(+document.getElementById('rebounds').value,79.5,8)],['Over 39.5 total assists',normalOver(+document.getElementById('assists').value,39.5,6)],
+  [(document.getElementById('basketPlayer').value.trim()||'Selected player')+' 15+ points',normalOver(+document.getElementById('playerPts').value,14.5,7)],
+  [(document.getElementById('basketPlayer').value.trim()||'Selected player')+' 20+ points',normalOver(+document.getElementById('playerPts').value,19.5,7)],
+  [(document.getElementById('basketPlayer').value.trim()||'Selected player')+' 5+ rebounds',normalOver(+document.getElementById('playerReb').value,4.5,3)],
+  [(document.getElementById('basketPlayer').value.trim()||'Selected player')+' 5+ assists',normalOver(+document.getElementById('playerAst').value,4.5,2.5)]];
  }
  current={id:Date.now(),sport,home:h,away:a,league,date:document.getElementById('matchDate').value,markets:markets.map(m=>({name:m[0],prob:m[1]})),created:new Date().toISOString(),status:'Pending'};
  currentMarkets=markets;
