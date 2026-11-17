@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#101827"><meta name="description" content="Private football and basketball prediction workspace">
+<link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icons/icon-192.png">
+<title>DINO FUTURE</title>
+<style>
+:root{--navy:#101827;--green:#15966b;--bg:#f2f5f7;--ink:#172333;--muted:#718096;--line:#e4eaf0;--white:#fff}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px system-ui,-apple-system,Segoe UI,sans-serif}
+header{background:var(--navy);color:white;padding:18px 18px 16px;position:sticky;top:0;z-index:5}
+.brand{display:flex;align-items:center;gap:11px}.logo{width:43px;height:43px;border-radius:13px;background:#1a9b70;display:grid;place-items:center;font-size:24px}
+h1{font-size:19px;margin:0;font-weight:900;letter-spacing:.4px}.sub{font-size:10px;color:#b8c6d8;letter-spacing:1px}
+main{max-width:760px;margin:auto;padding:16px 14px 90px}.hero{background:linear-gradient(135deg,#101827,#1d3b4d);color:#fff;border-radius:20px;padding:19px;margin:4px 0 16px}
+.hero h2{font-size:23px;line-height:1.2;margin:6px 0}.hero p{color:#d0dbe5;font-size:13px;margin:7px 0 13px}.eyebrow{color:#76dfb5;font-weight:800;font-size:10px;letter-spacing:1px}
+.pills{display:flex;gap:8px;flex-wrap:wrap}.pill{border:1px solid #ffffff30;border-radius:30px;padding:7px 11px;font-size:12px;color:#e9f1f5}
+.tabs{display:flex;gap:8px;overflow:auto;margin:14px 0}.tab{border:0;background:#e5ebef;color:#344256;border-radius:11px;padding:10px 14px;font-weight:700;white-space:nowrap}.tab.active{background:var(--green);color:#fff}
+.card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:15px;margin:11px 0;box-shadow:0 2px 8px #15233408}
+h3{margin:0 0 10px;font-size:16px}h4{margin:0 0 5px;font-size:14px}
+.muted{color:var(--muted);font-size:12px}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+button,select,input{font:inherit}button{cursor:pointer}.sport{border:1px solid var(--line);background:white;border-radius:14px;padding:15px;text-align:left;font-weight:800;color:var(--navy)}.sport.selected{border:2px solid var(--green);background:#eaf7f1}
+label{display:block;font-size:12px;font-weight:700;color:#526174;margin:10px 0 5px}
+input,select{width:100%;padding:11px;border:1px solid #d8e0e8;border-radius:10px;background:#fff;color:#172333;min-height:43px}
+.row{display:flex;gap:10px}.row>*{flex:1;min-width:0}
+.btn{border:0;background:var(--green);color:#fff;padding:12px 15px;border-radius:11px;font-weight:800}.btn.secondary{background:#e7edf1;color:#233247}.btn.danger{background:#fff0f0;color:#a33434}.btn.full{width:100%;margin-top:12px}
+.marketlist{display:grid;grid-template-columns:1fr 1fr;gap:8px}.market{padding:10px;border:1px solid var(--line);border-radius:10px;background:white;text-align:left;font-size:12px;font-weight:700}.market.on{background:#e9f7f0;border-color:var(--green);color:#08734d}
+.result{background:#eaf7f1;border-radius:12px;padding:13px;margin-top:12px}.prob{font-size:26px;font-weight:900;color:#08734d}.warning{background:#fff7e8;border:1px solid #f2dfb5;color:#805500;padding:11px;border-radius:11px;font-size:12px;margin:10px 0}
+.item{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:11px 0;border-bottom:1px solid var(--line)}.item:last-child{border:0}.tag{font-size:10px;background:#eaf0f4;padding:4px 7px;border-radius:20px;color:#536477}
+nav{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--line);display:flex;justify-content:space-around;padding:8px 4px calc(8px + env(safe-area-inset-bottom));z-index:8}
+nav button{background:none;border:0;color:#718096;font-size:11px;font-weight:700;display:grid;gap:3px;justify-items:center}nav button.active{color:var(--green)}nav b{font-size:19px}
+.hidden{display:none!important}.small{font-size:11px}.stat{font-size:22px;font-weight:900}.empty{text-align:center;padding:25px;color:#788697}
+footer{text-align:center;color:#8190a0;font-size:10px;padding:15px}
+@media(max-width:390px){.grid2,.marketlist{grid-template-columns:1fr}.hero h2{font-size:20px}}
+</style></head>
+<body>
+<header><div class="brand"><div class="logo">🏆</div><div><h1>DINO FUTURE</h1><div class="sub">PRIVATE SPORTS PREDICTION CENTER</div></div></div></header>
+<main>
+<section id="home">
+ <div class="hero"><div class="eyebrow">YOUR PERSONAL ANALYSIS SPACE</div><h2>Predict smarter.<br>Track every decision.</h2><p>Football and basketball research, probability estimates and private prediction history.</p><div class="pills"><span class="pill">⚽ Football</span><span class="pill">🏀 Basketball</span><span class="pill">🔒 Private on this device</span></div></div>
+ <h3>Choose your sport</h3><div class="grid2"><button class="sport selected" id="footballBtn" onclick="setSport('Football')">⚽ Football <div class="muted">Goals, corners, cards, players</div></button><button class="sport" id="basketballBtn" onclick="setSport('Basketball')">🏀 Basketball <div class="muted">Points, rebounds, assists</div></button></div>
+ <div class="card"><h3 id="welcomeSport">Football analysis</h3><div class="muted">Create a match analysis using your own expected statistics. Real sports feeds are not connected yet.</div><button class="btn full" onclick="showPage('analyze')">＋ Analyse a match</button></div>
+ <div class="grid2"><div class="card"><div class="muted">Saved predictions</div><div class="stat" id="savedCount">0</div></div><div class="card"><div class="muted">Graded predictions</div><div class="stat" id="gradedCount">0</div></div></div>
+ <div class="warning">Prototype status: live fixtures, lineups and automatic player statistics are not connected. Never treat demo estimates as guaranteed outcomes.</div>
+</section>
+<section id="analyze" class="hidden">
+ <h3>Match analysis</h3><p class="muted">Enter match information and expected statistics. Estimates are only as reliable as the inputs.</p>
+ <div class="card">
+  <div class="row"><div><label>Sport</label><select id="sportSelect" onchange="setSport(this.value)"><option>Football</option><option>Basketball</option></select></div><div><label>Competition / league</label><input id="league" placeholder="e.g. Premier League"></div></div>
+  <div class="row"><div><label>Home team</label><input id="homeTeam" placeholder="Home team"></div><div><label>Away team</label><input id="awayTeam" placeholder="Away team"></div></div>
+  <label>Match date (optional)</label><input id="matchDate" type="date">
+  <div id="footballInputs">
+   <div class="row"><div><label>Home expected goals</label><input id="homeXg" type="number" min="0" max="8" step=".1" value="1.5"></div><div><label>Away expected goals</label><input id="awayXg" type="number" min="0" max="8" step=".1" value="1.1"></div></div>
+   <div class="row"><div><label>Expected total corners</label><input id="corners" type="number" min="0" max="25" step=".5" value="9.5"></div><div><label>Expected total cards</label><input id="cards" type="number" min="0" max="15" step=".5" value="3.5"></div></div>
+  </div>
+  <div id="basketballInputs" class="hidden">
+   <div class="row"><div><label>Home expected points</label><input id="homePts" type="number" min="0" max="200" value="110"></div><div><label>Away expected points</label><input id="awayPts" type="number" min="0" max="200" value="106"></div></div>
+   <div class="row"><div><label>Expected total rebounds (optional)</label><input id="rebounds" type="number" min="0" max="150" value="85"></div><div><label>Expected total assists (optional)</label><input id="assists" type="number" min="0" max="100" value="48"></div></div>
+  </div>
+  <button class="btn full" onclick="generateMarkets()">Generate available estimates</button>
+ </div>
+ <div id="marketArea" class="card hidden"><h3>Prediction markets</h3><div class="muted" id="marketIntro">Select a market to see an estimate.</div><div class="marketlist" id="marketList"></div><div id="estimate" class="result hidden"></div><button class="btn full" id="saveBtn" onclick="savePrediction()" disabled>Save this prediction</button></div>
+</section>
+<section id="saved" class="hidden"><h3>My saved predictions</h3><p class="muted">Stored privately in this browser on this phone.</p><div id="savedList"></div></section>
+<section id="settings" class="hidden"><h3>Settings & data sources</h3>
+ <div class="card"><h4>Privacy</h4><p class="muted">Your saved records stay in this browser's local storage. Clearing browser data can erase them. No account or public profile is used.</p></div>
+ <div class="card"><h4>Sports data connection</h4><p class="muted">Next integration stage: connect a free sports-data provider through a secure service. Do not paste private API keys into this public page.</p><p class="muted">A free multi-sport API candidate is SportScore; its terms require visible attribution. Coverage and market-specific statistics must be tested before use.</p><a href="https://sportscore.com/developers/" target="_blank" rel="noopener">SportScore developer information ↗</a></div>
+ <div class="card"><h4>Prediction model</h4><p class="muted">Football goals use a simple Poisson model from the expected-goal inputs. Other markets use approximate estimates. Player markets require verified lineups and player-level data and are not calculated in this version.</p></div>
+ <div class="card"><h4>Backup</h4><button class="btn secondary full" onclick="exportData()">Export my saved predictions</button><button class="btn danger full" onclick="clearData()">Delete all saved data</button></div>
+ <div class="warning">Predictions are uncertain estimates, not betting advice or guarantees. Never stake money you cannot afford to lose.</div>
+</section>
+<footer>DINO FUTURE • Personal prototype • v1.1</footer>
+</main>
+<nav><button class="active" data-page="home" onclick="showPage('home')"><b>⌂</b>Home</button><button data-page="analyze" onclick="showPage('analyze')"><b>＋</b>Analyse</button><button data-page="saved" onclick="showPage('saved')"><b>▣</b>Saved</button><button data-page="settings" onclick="showPage('settings')"><b>⚙</b>Settings</button></nav>
+<script>
+let sport='Football', current=null, currentMarkets=[];
+const footballMarkets=['Home win','Draw','Away win','Over 0.5 goals','Over 1.5 goals','Over 2.5 goals','Over 3.5 goals','Under 2.5 goals','Both teams to score','Correct score','Over 7.5 corners','Over 8.5 corners','Over 9.5 corners','Over 2.5 cards','Over 3.5 cards','Home team over 0.5 goals','Away team over 0.5 goals'];
+const basketballMarkets=['Home win','Away win','Over 199.5 total points','Over 209.5 total points','Over 219.5 total points','Under 219.5 total points','Home team over 99.5 points','Away team over 99.5 points','Over 79.5 total rebounds','Over 39.5 total assists'];
+function setSport(s){sport=s;document.getElementById('sportSelect').value=s;document.getElementById('footballBtn').classList.toggle('selected',s==='Football');document.getElementById('basketballBtn').classList.toggle('selected',s==='Basketball');document.getElementById('welcomeSport').textContent=s+' analysis';document.getElementById('footballInputs').classList.toggle('hidden',s!=='Football');document.getElementById('basketballInputs').classList.toggle('hidden',s!=='Basketball');document.getElementById('marketArea').classList.add('hidden')}
+function showPage(p){['home','analyze','saved','settings'].forEach(x=>document.getElementById(x).classList.toggle('hidden',x!==p));document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===p));if(p==='saved')renderSaved();refreshCounts()}
+function poissonPOver(lambda,line){let k=Math.floor(line);let sum=0;for(let i=0;i<=k;i++)sum+=Math.exp(-lambda)*Math.pow(lambda,i)/fact(i);return Math.max(0,Math.min(1,1-sum))}
+function fact(n){let x=1;for(let i=2;i<=n;i++)x*=i;return x}
+function poissonProb(k,l){return Math.exp(-l)*Math.pow(l,k)/fact(k)}
+function pct(x){return (100*x).toFixed(1)+'%'}
+function generateMarkets(){
+ const h=document.getElementById('homeTeam').value.trim()||'Home team',a=document.getElementById('awayTeam').value.trim()||'Away team';
+ const league=document.getElementById('league').value.trim()||'Unspecified competition';
+ let markets=[];
+ if(sport==='Football'){
+  let xh=+document.getElementById('homeXg').value, xa=+document.getElementById('awayXg').value, total=xh+xa;
+  if(xh<0||xa<0||!Number.isFinite(total)){alert('Enter valid expected goals');return}
+  let home=0,draw=0,away=0,correct={score:'',p:0};
+  for(let i=0;i<=8;i++)for(let j=0;j<=8;j++){let p=poissonProb(i,xh)*poissonProb(j,xa);if(i>j)home+=p;else if(i===j)draw+=p;else away+=p;if(p>correct.p)correct={score:i+'-'+j,p}}
+  markets=[
+   ['Home win',home],['Draw',draw],['Away win',away],
+   ['Over 0.5 goals',poissonPOver(total,.5)],['Over 1.5 goals',poissonPOver(total,1.5)],['Over 2.5 goals',poissonPOver(total,2.5)],['Over 3.5 goals',poissonPOver(total,3.5)],['Under 2.5 goals',1-poissonPOver(total,2.5)],
+   ['Both teams to score',(1-Math.exp(-xh))*(1-Math.exp(-xa))],
+   ['Correct score '+correct.score,correct.p],
+   ['Over 7.5 corners',poissonPOver(+document.getElementById('corners').value,7.5)],['Over 8.5 corners',poissonPOver(+document.getElementById('corners').value,8.5)],['Over 9.5 corners',poissonPOver(+document.getElementById('corners').value,9.5)],
+   ['Over 2.5 cards',poissonPOver(+document.getElementById('cards').value,2.5)],['Over 3.5 cards',poissonPOver(+document.getElementById('cards').value,3.5)],
+   [h+' over 0.5 goals',1-Math.exp(-xh)],[a+' over 0.5 goals',1-Math.exp(-xa)]
+  ];
+ }else{
+  let hp=+document.getElementById('homePts').value,ap=+document.getElementById('awayPts').value,mean=hp+ap;
+  const normalOver=(mu,line,sd)=>1/(1+Math.exp(-(mu-line)/(sd*.55)));
+  markets=[['Home win',1/(1+Math.exp(-(hp-ap)/12))],['Away win',1/(1+Math.exp(-(ap-hp)/12))],
+  ['Over 199.5 total points',normalOver(mean,199.5,18)],['Over 209.5 total points',normalOver(mean,209.5,18)],['Over 219.5 total points',normalOver(mean,219.5,18)],['Under 219.5 total points',1-normalOver(mean,219.5,18)],
+  ['Home team over 99.5 points',normalOver(hp,99.5,10)],['Away team over 99.5 points',normalOver(ap,99.5,10)],
+  ['Over 79.5 total rebounds',normalOver(+document.getElementById('rebounds').value,79.5,8)],['Over 39.5 total assists',normalOver(+document.getElementById('assists').value,39.5,6)]];
+ }
+ current={id:Date.now(),sport,home:h,away:a,league,date:document.getElementById('matchDate').value,markets:markets.map(m=>({name:m[0],prob:m[1]})),created:new Date().toISOString(),status:'Pending'};
+ currentMarkets=markets;
+ document.getElementById('marketArea').classList.remove('hidden');document.getElementById('marketIntro').textContent=h+' vs '+a+' • '+league;
+ const list=document.getElementById('marketList');list.innerHTML='';
+ markets.forEach((m,i)=>{let b=document.createElement('button');b.className='market';b.textContent=m[0];b.onclick=()=>selectMarket(i);list.appendChild(b)});
+ document.getElementById('estimate').classList.add('hidden');document.getElementById('saveBtn').disabled=true;
+ selectMarket(0);
+}
+function selectMarket(i){let m=currentMarkets[i];document.querySelectorAll('.market').forEach((b,j)=>b.classList.toggle('on',i===j));let e=document.getElementById('estimate');e.classList.remove('hidden');e.innerHTML='<div class="muted">MODEL ESTIMATE • '+m[0]+'</div><div class="prob">'+pct(m[1])+'</div><div class="muted">Estimated probability based on the values entered. Not a guaranteed outcome.</div>';current.selected={name:m[0],prob:m[1]};document.getElementById('saveBtn').disabled=false}
+function getSaved(){try{return JSON.parse(localStorage.getItem('dinoPredictions')||'[]')}catch(e){return []}}
+function savePrediction(){if(!current||!current.selected)return;let arr=getSaved();arr.unshift({...current,selected:{...current.selected}});localStorage.setItem('dinoPredictions',JSON.stringify(arr));alert('Prediction saved on this device.');refreshCounts();showPage('saved')}
+function renderSaved(){let arr=getSaved(),el=document.getElementById('savedList');el.innerHTML='';if(!arr.length){el.innerHTML='<div class="empty">No saved predictions yet.</div>';return}arr.forEach(p=>{let d=document.createElement('div');d.className='card';d.innerHTML='<div class="item"><div><b>'+esc(p.home)+' vs '+esc(p.away)+'</b><div class="muted">'+esc(p.sport)+' • '+esc(p.league)+'</div></div><span class="tag">'+esc(p.status)+'</span></div><div style="padding-top:10px"><b>'+esc(p.selected.name)+'</b><div class="prob" style="font-size:22px">'+pct(p.selected.prob)+'</div><div class="muted">Saved '+new Date(p.created).toLocaleString()+'</div></div><div class="row" style="margin-top:10px"><button class="btn secondary" onclick="grade('+p.id+',true)">Mark won</button><button class="btn secondary" onclick="grade('+p.id+',false)">Mark lost</button><button class="btn danger" onclick="removePred('+p.id+')">Delete</button></div>';el.appendChild(d)})}
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function grade(id,won){let a=getSaved();let p=a.find(x=>x.id===id);if(p){p.status=won?'Won':'Lost';p.gradedAt=new Date().toISOString();localStorage.setItem('dinoPredictions',JSON.stringify(a));renderSaved();refreshCounts()}}
+function removePred(id){localStorage.setItem('dinoPredictions',JSON.stringify(getSaved().filter(x=>x.id!==id)));renderSaved();refreshCounts()}
+function refreshCounts(){let a=getSaved();document.getElementById('savedCount').textContent=a.length;document.getElementById('gradedCount').textContent=a.filter(x=>x.status==='Won'||x.status==='Lost').length}
+function exportData(){let blob=new Blob([JSON.stringify(getSaved(),null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='dino-future-predictions.json';a.click();URL.revokeObjectURL(url)}
+function clearData(){if(confirm('Delete every saved prediction from this browser?')){localStorage.removeItem('dinoPredictions');renderSaved();refreshCounts()}}
+if('serviceWorker'in navigator&&location.protocol.startsWith('http'))window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
+refreshCounts();
+</script></body></html>
