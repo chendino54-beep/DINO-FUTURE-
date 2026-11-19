@@ -1,1 +1,3 @@
-name = "dino-future"\nmain = "worker.js"\ncompatibility_date = "2026-11-19"\n
+Open your repository and select wrangler.toml:
+Open wrangler.toml in GitHub⁠
+Tap the pencil icon, replace its contents with these three lines, and commit:
